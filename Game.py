@@ -160,6 +160,8 @@ class GameWindow:
 
         self.bar_gap_coords = []
 
+        self.ray_distances = []
+
     def re_init(self):
         self.player = Player(250, 250, 3, (10, 10))
 
@@ -206,12 +208,14 @@ class GameWindow:
     def run_game(self):
 
         while self.run:
-
+            print("Start")
             pygame.time.delay(self.game_refresh)
             self.passed_though_bars = False
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.run = False
+
+            self.ray_distances = []
 
             self.bar_vel = self.bar_vel_initial + (self.game_time / 10000)
 
@@ -255,6 +259,8 @@ class GameWindow:
             self.player.update()
             self.obst_coord = [((0, 300), (150, 300)), ((0, 400), (50, 400)), ((150, 400), (500, 400)), ((250, 300), (500, 300))]
             self.raycasting.update((int(self.player.x + self.player.size[0] / 2), int(self.player.y + self.player.size[0] / 2)), self.bar_gap_coords)
+            self.ray_distances = self.raycasting.dist
+            print(self.ray_distances)
 
             self.game_time += self.game_refresh
 

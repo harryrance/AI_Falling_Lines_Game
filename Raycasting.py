@@ -19,6 +19,8 @@ class Raycasting():
         self.circle_coordinates = []
         self.ray_line_draw = []
 
+        self.dist = []
+
     def ray(self, p_x, p_y, c_x, c_y):
 
         d_x = -p_x + c_x
@@ -139,6 +141,17 @@ class Raycasting():
 
         return real
 
+    def calculate_distance(self, start, end):
+        rs_x, rs_y = start
+        re_x, re_y = end
+
+        dx = rs_x - re_x
+        dy = rs_y - re_y
+
+        distance = math.sqrt((dx * dx) + (dy * dy))
+
+        return distance
+
     def get_closest_line(self, line_coords, player_coords, ray_dir):
 
         player_x, player_y = player_coords
@@ -218,6 +231,8 @@ class Raycasting():
 
         ray_end_coords = []
 
+        self.dist = []
+
         if len(self.ray_list) == len(coords):
 
             for coord in self.ray_list:
@@ -262,6 +277,7 @@ class Raycasting():
                             else:
                                 ray_end_point = ray_end
                 self.ray_line_draw.append((ray_start, ray_end_point))
+                self.dist.append(round(self.calculate_distance(ray_start, ray_end_point), 2))
 
     def draw(self):
 
